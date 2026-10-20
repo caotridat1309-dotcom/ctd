@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi cậu một bức thư 💌</title>
+    <!-- Tải phông chữ đẹp từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Hiệu ứng nền chuyển màu */
+        
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        /* --- PHẦN 1: BỨC THƯ (ENVELOPE) --- */
+        
+        #intro-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            transition: opacity 1s ease;
+        }
+        
+        .instruction {
+            color: #d6336c;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+        
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .envelope-wrapper:hover {
+            transform: translateY(-10px);
+        }
+        
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #ff758c;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .envelope::before {
+            /* Nắp dưới */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-bottom: 90px solid #ff8fa3;
+            border-right: 140px solid transparent;
+            border-left: 140px solid transparent;
+            z-index: 3;
+        }
+        
+        .envelope::after {
+            /* 2 cánh bên */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 140px solid #ff6b81;
+            border-right: 140px solid #ff6b81;
+            border-top: 90px solid transparent;
+            border-bottom: 90px solid transparent;
+            z-index: 2;
+        }
+        
+        .flap {
+            /* Nắp trên */
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top: 95px solid #ff4757;
+            border-right: 140px solid transparent;
+            border-left: 140px solid transparent;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.5s;
+        }
+        
+        .envelope-wrapper:hover .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 160px;
+            background: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transition: transform 0.5s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .envelope-wrapper:hover .letter {
+            transform: translateY(-40px);
+        }
+        
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #d6336c;
+        }
+        /* --- PHẦN 2: THIỆP CHÍNH (CARD) --- */
+        
+        #card-screen {
+            display: none;
+            position: relative;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 90%;
+            width: 500px;
+            z-index: 10;
+            box-shadow: 0 10px 40px rgba(255, 117, 140, 0.2);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        #card-screen.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d6336c;
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-box {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #333;
+            min-height: 150px;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff4757;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        /* --- HOA RƠI --- */
+        
+        .petal {
+            position: absolute;
+            top: -10%;
+            z-index: 5;
+            user-select: none;
+            animation: fall linear forwards, sway 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                opacity: 0.3;
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes sway {
+            0% {
+                transform: translateX(0px) rotate(0deg);
+            }
+            100% {
+                transform: translateX(50px) rotate(45deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nhạc nền: Bạn có thể đổi link đuôi .mp3 khác nếu muốn -->
+    <audio id="bgMusic" loop>
+        <source src="https://github.com/rafaelreis-hotmart/Audio-Sample-files/raw/master/sample.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Màn hình phong bì thư -->
+    <div id="intro-screen">
+        <div class="instruction">Chạm vào phong bì để mở nhé! 👇</div>
+        <div class="envelope-wrapper" onclick="openLetter()">
+            <div class="flap"></div>
+            <div class="envelope"></div>
+            <div class="letter">
+                <div class="letter-content">Gửi cậu... ❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Màn hình nội dung thiệp -->
+    <div id="card-screen">
+        <h1>Mừng ngày 20/10 🌸</h1>
+        <div class="message-box" id="text-container"></div>
+        <div class="signature" id="signature">Ngắm thiệp vui vẻ nha! ✨</div>
+    </div>
+
+    <!-- Script xử lý chuyển động -->
+    <script>
+        // Nội dung lời chúc (Bạn có thể sửa ở đây)
+        const messageText = "Nhân ngày Phụ nữ Việt Nam, tớ muốn gửi đến cậu những lời chúc tốt đẹp nhất. Chúc cậu luôn rạng rỡ như ánh ban mai, dịu dàng như những đóa hoa và hạnh phúc viên mãn. Cứ mãi tự tin, yêu đời và toả sáng theo cách riêng của mình cậu nhé! ❤️";
+
+        let i = 0;
+        const speed = 60; // Tốc độ gõ chữ (ms)
+
+        function openLetter() {
+            // 1. Phát nhạc nền (có thể một số trình duyệt chặn nếu chưa tương tác mạnh)
+            document.getElementById('bgMusic').play().catch(e => console.log("Trình duyệt chặn tự động phát nhạc"));
+
+            // 2. Ẩn phong bì
+            document.getElementById('intro-screen').style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                const card = document.getElementById('card-screen');
+                card.style.display = 'block';
+
+                // 3. Hiển thị thiệp với độ trễ nhỏ để hiệu ứng bung ra đẹp hơn
+                setTimeout(() => {
+                    card.classList.add('show');
+                    // 4. Bắt đầu gõ chữ
+                    setTimeout(typeWriter, 800);
+                    // 5. Bắt đầu rơi hoa
+                    setInterval(createPetal, 400);
+                }, 100);
+            }, 1000);
+        }
+
+        // Hiệu ứng gõ chữ
+        function typeWriter() {
+            if (i < messageText.length) {
+                document.getElementById("text-container").innerHTML += messageText.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                // Hiển thị chữ ký khi gõ xong
+                document.getElementById("signature").style.opacity = '1';
+            }
+        }
+
+        // Hiệu ứng tạo cánh hoa rơi
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+
+            // Các icon thả xuống
+            const items = ['🌸', '✨', '💖', '🎀', '🌷'];
+            petal.innerText = items[Math.floor(Math.random() * items.length)];
+
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 3 + 4 + 's'; // Thời gian rơi từ 4s - 7s
+            petal.style.fontSize = Math.random() * 15 + 15 + 'px'; // Kích thước từ 15px - 30px
+
+            document.body.appendChild(petal);
+
+            // Xóa element sau khi rơi xong để không nặng máy
+            setTimeout(() => {
+                petal.remove();
+            }, 7000);
+        }
+    </script>
+</body>
+
+</html>
