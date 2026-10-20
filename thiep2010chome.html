@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kính tặng Mẹ ngày 20/10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Great+Vibes&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #6b0000 0%, #1a0000 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+        }
+        /* Vùng không gian 3D */
+        
+        .scene {
+            width: 450px;
+            height: 600px;
+            perspective: 1500px;
+            max-width: 95%;
+            z-index: 10;
+        }
+        /* Thẻ thiệp xoay 3D */
+        
+        .card-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        
+        .card-container.is-flipped {
+            transform: rotateY(180deg);
+        }
+        /* Định dạng chung 2 mặt thiệp */
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            border: 3px solid #d4af37;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(212, 175, 55, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 35px;
+            background: rgba(40, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+        }
+        /* Họa tiết góc cổ điển */
+        
+        .card-face::before,
+        .card-face::after {
+            content: '✿';
+            position: absolute;
+            color: #d4af37;
+            font-size: 32px;
+            text-shadow: 0 0 15px #d4af37;
+        }
+        
+        .card-face::before {
+            top: 15px;
+            left: 20px;
+        }
+        
+        .card-face::after {
+            bottom: 15px;
+            right: 20px;
+        }
+        /* --- MẶT TRƯỚC --- */
+        
+        .card-front {
+            transform: rotateY(0deg);
+        }
+        
+        .card-front h1 {
+            font-family: 'Great Vibes', cursive;
+            color: #ffd700;
+            font-size: 4rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .pulse-btn {
+            margin-top: 40px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: transparent;
+            border: 1px solid #d4af37;
+            border-radius: 30px;
+            font-family: 'Lora', serif;
+            font-style: italic;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+        /* --- MẶT SAU --- */
+        
+        .card-back {
+            transform: rotateY(180deg);
+            justify-content: flex-start;
+        }
+        
+        .photo-frame {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 10px auto 20px auto;
+            border-radius: 50%;
+            border: 4px solid #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+        }
+        
+        .card-container.is-flipped .photo-frame img {
+            transform: scale(1.1);
+        }
+        
+        .shining-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            margin: 0 0 15px 0;
+            font-weight: normal;
+            background: linear-gradient(90deg, #d4af37, #fff, #d4af37);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+            flex-shrink: 0;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        /* Khung chứa chữ Đánh máy */
+        
+        .message-container {
+            font-family: 'Lora', serif;
+            color: #fdf5e6;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: justify;
+            text-align-last: center;
+            font-style: italic;
+            min-height: 160px;
+        }
+        
+        p.signature {
+            font-family: 'Great Vibes', cursive;
+            color: #d4af37;
+            font-size: 2.4rem;
+            margin: 20px 0 0 0;
+            text-align: right;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        /* Hạt rơi & Pháo hoa */
+        
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 50%;
+        }
+        
+        @keyframes explosion {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes floatDown {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nhạc nền Piano -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db8ab7c5ec.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="scene">
+        <div class="card-container" id="card" onclick="openCard()">
+
+            <!-- Mặt Trước -->
+            <div class="card-face card-front">
+                <h1>Kính Tặng<br>Mẹ Yêu</h1>
+                <div style="width: 120px; height: 2px; background: #d4af37; margin: 15px 0;"></div>
+                <div class="pulse-btn">Chạm vào để mở thư</div>
+            </div>
+
+            <!-- Mặt Sau -->
+            <div class="card-face card-back">
+                <div class="photo-frame">
+                    <img src="8725bda7d68256dc0f932.jpg" alt="Ảnh mẹ và con">
+                </div>
+
+                <h2 class="shining-text">Ngày 20/10 Hạnh Phúc</h2>
+
+                <div class="message-container" id="text-box"></div>
+                <p class="signature" id="sign">Con trai của mẹ</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let isOpened = false;
+
+        // Đoạn thư dài dạt dào tình cảm
+        const messageText = "Nhân ngày Phụ nữ Việt Nam 20/10, con muốn gửi đến mẹ những lời chúc tốt đẹp nhất. Mẹ luôn là người phụ nữ tuyệt vời, đã tần tảo sớm hôm và hy sinh vất vả để nuôi dưỡng con nên người. Dù con có lớn khôn hay đi xa đến đâu, vòng tay mẹ vẫn luôn là bến đỗ bình yên nhất. Con chúc mẹ luôn dồi dào sức khỏe, nụ cười rạng rỡ luôn nở trên môi và mãi mãi hạnh phúc bình an bên gia đình. Con yêu mẹ rất nhiều!";
+        let charIndex = 0;
+        const typingSpeed = 40; // Tốc độ gõ chữ
+
+        function openCard() {
+            if (!isOpened) {
+                // 1. Phát nhạc
+                document.getElementById('bg-music').play().catch(e => console.log("Trình duyệt chặn tự động phát nhạc"));
+
+                // 2. Lật thiệp
+                document.getElementById('card').classList.add('is-flipped');
+
+                // 3. Hiệu ứng pháo hoa bụi vàng nổ ra
+                createFireworks();
+
+                // 4. Bắt đầu đánh chữ (sau khi lật xong)
+                setTimeout(typeWriter, 1200);
+
+                // 5. Mưa bụi vàng liên tục
+                setInterval(createFallingDust, 400);
+
+                isOpened = true;
+            }
+        }
+
+        // Hiệu ứng Đánh máy
+        function typeWriter() {
+            if (charIndex < messageText.length) {
+                document.getElementById("text-box").innerHTML += messageText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                // Hiện chữ ký
+                document.getElementById("sign").style.opacity = '1';
+            }
+        }
+
+        // Tạo chùm pháo hoa lúc mở
+        function createFireworks() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            for (let i = 0; i < 60; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('particle');
+
+                const size = Math.random() * 5 + 2;
+                spark.style.width = size + 'px';
+                spark.style.height = size + 'px';
+                spark.style.background = '#ffd700';
+                spark.style.boxShadow = '0 0 10px #ffd700, 0 0 20px #fff';
+
+                spark.style.left = centerX + 'px';
+                spark.style.top = centerY + 'px';
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 300 + 100;
+                const tx = Math.cos(angle) * distance + 'px';
+                const ty = Math.sin(angle) * distance + 'px';
+
+                spark.style.setProperty('--tx', tx);
+                spark.style.setProperty('--ty', ty);
+                spark.style.animation = `explosion 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+
+                document.body.appendChild(spark);
+                setTimeout(() => {
+                    spark.remove();
+                }, 1500);
+            }
+        }
+
+        // Tạo hạt rơi liên tục
+        function createFallingDust() {
+            const dust = document.createElement('div');
+            dust.classList.add('particle');
+
+            const isPetal = Math.random() > 0.7;
+            if (isPetal) {
+                dust.innerText = '✿';
+                dust.style.color = '#d4af37';
+                dust.style.fontSize = Math.random() * 12 + 10 + 'px';
+                dust.style.textShadow = '0 0 5px rgba(212, 175, 55, 0.5)';
+            } else {
+                const size = Math.random() * 4 + 2;
+                dust.style.width = size + 'px';
+                dust.style.height = size + 'px';
+                dust.style.background = '#ffd700';
+                dust.style.boxShadow = '0 0 8px #ffd700';
+            }
+
+            dust.style.left = Math.random() * 100 + 'vw';
+            dust.style.animation = `floatDown ${Math.random() * 5 + 5}s linear forwards`;
+
+            document.body.appendChild(dust);
+            setTimeout(() => {
+                dust.remove();
+            }, 10000);
+        }
+    </script>
+</body>
+
+</html>
